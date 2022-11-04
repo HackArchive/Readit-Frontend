@@ -2,6 +2,8 @@ import 'package:clock_hacks_book_reading/constants/routes.dart';
 import 'package:clock_hacks_book_reading/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
+// flutter packages pub run build_runner build
+
 void main() {
   runApp(const MyApp());
 }
