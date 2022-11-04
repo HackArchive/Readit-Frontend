@@ -1,5 +1,6 @@
 import 'package:clock_hacks_book_reading/constants/routes.dart';
 import 'package:clock_hacks_book_reading/models/user_model.dart';
+import 'package:clock_hacks_book_reading/network/user_apis.dart';
 import 'package:clock_hacks_book_reading/store/user_store.dart';
 import 'package:clock_hacks_book_reading/utils/app_utils.dart';
 import 'package:clock_hacks_book_reading/widgets/login/login_button.dart';
@@ -42,13 +43,9 @@ class _LoginPageState extends State<LoginPage> {
     try {
       AppUtils.showLoading("Logging in..");
 
-      // TODO: Make API call here
-      // Student student = await StudentApi.login(
-      //   _idController.text,
-      //   _passwordController.text,
-      // );
+      User user =
+          await UserAPI.login(_emailController.text, _passwordController.text);
 
-      User user = User.getDummyUser();
       context.read<UserStore>().login(user);
 
       AppUtils.dismissLoading();

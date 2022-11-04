@@ -21,6 +21,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   image_picker: ^0.8.6
   carousel_slider: ^4.1.1
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

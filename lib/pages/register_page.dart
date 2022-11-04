@@ -1,4 +1,5 @@
 import 'package:clock_hacks_book_reading/constants/routes.dart';
+import 'package:clock_hacks_book_reading/network/user_apis.dart';
 import 'package:clock_hacks_book_reading/utils/app_utils.dart';
 import 'package:clock_hacks_book_reading/widgets/login/login_button.dart';
 import 'package:clock_hacks_book_reading/widgets/login/login_text_field.dart';
@@ -49,11 +50,16 @@ class _RegisterPageState extends State<RegisterPage> {
     try {
       AppUtils.showLoading("Registering...");
 
-      // TODO: API Call here
-      // Student student = await StudentApi.login(
-      //   _idController.text,
-      //   _passwordController.text,
-      // );
+      bool registrationSuccessful = await UserAPI.register(
+        _nameController.text,
+        _phoneController.text,
+        _emailController.text,
+        _passwordController.text,
+      );
+
+      if (!registrationSuccessful) {
+        throw Exception("Failed to register, please try again later")
+      }
 
       // If login successful, redirect
       AppUtils.dismissLoading();
