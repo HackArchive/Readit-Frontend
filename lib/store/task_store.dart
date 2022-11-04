@@ -7,7 +7,7 @@ class TaskStore = TaskStoreBase with _$TaskStore;
 
 abstract class TaskStoreBase with Store {
   @observable
-  late ObservableList<Task> userTasks;
+  ObservableList<Task> userTasks = ObservableList();
 
   TaskStoreBase() {
     userTasks = ObservableList();

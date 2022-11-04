@@ -9,7 +9,7 @@ abstract class UserStoreBase with Store {
   User? currentUser;
 
   @observable
-  late bool isLoggedIn;
+  bool isLoggedIn = false;
 
   UserStoreBase() {
     isLoggedIn = false;
