@@ -14,6 +14,10 @@ class APIEndpoints {
   static final String register = "$baseUrl/auth/register";
 
   // Tasks
+  static final String createTask = "$baseUrl/add";
+  static final String getAllTask = "$baseUrl/";
+  static String getTask(String id) => "$baseUrl/$id";
+  static String updateTask(String id) => "$baseUrl/update_task/$id";
 
   // Headers
   static const Map<String, String> postHeaders = {
