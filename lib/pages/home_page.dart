@@ -1,5 +1,7 @@
 import 'package:clock_hacks_book_reading/constants/routes.dart';
+import 'package:clock_hacks_book_reading/store/user_store.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   logout(BuildContext context) {
-    // context.read<StudentStore>().logout();
+    context.read<UserStore>().logout();
     Navigator.pushReplacementNamed(context, Routes.login);
   }
 

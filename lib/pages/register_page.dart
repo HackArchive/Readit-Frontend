@@ -1,4 +1,5 @@
 import 'package:clock_hacks_book_reading/constants/routes.dart';
+import 'package:clock_hacks_book_reading/utils/app_utils.dart';
 import 'package:clock_hacks_book_reading/widgets/login/login_button.dart';
 import 'package:clock_hacks_book_reading/widgets/login/login_text_field.dart';
 import 'package:flutter/material.dart';
@@ -46,23 +47,20 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     try {
-      // AppUtils.showLoading("Logging in..");
+      AppUtils.showLoading("Registering...");
+
+      // TODO: API Call here
       // Student student = await StudentApi.login(
       //   _idController.text,
       //   _passwordController.text,
       // );
 
-      // context.read<StudentStore>().login(student);
-      // context
-      //     .read<AssignedExamStore>()
-      //     .getAssignedExams(student.id, student.token);
-
-      // AppUtils.dismissLoading();
-
+      // If login successful, redirect
+      AppUtils.dismissLoading();
       Navigator.pushReplacementNamed(context, Routes.login);
     } catch (e) {
-      // AppUtils.dismissLoading();
-      // AppUtils.showToast(e.toString());
+      AppUtils.dismissLoading();
+      AppUtils.showToast(e.toString());
     }
   }
 

@@ -1,7 +1,11 @@
 import 'package:clock_hacks_book_reading/constants/routes.dart';
+import 'package:clock_hacks_book_reading/models/user_model.dart';
+import 'package:clock_hacks_book_reading/store/user_store.dart';
+import 'package:clock_hacks_book_reading/utils/app_utils.dart';
 import 'package:clock_hacks_book_reading/widgets/login/login_button.dart';
 import 'package:clock_hacks_book_reading/widgets/login/login_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -36,23 +40,22 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     try {
-      // AppUtils.showLoading("Logging in..");
+      AppUtils.showLoading("Logging in..");
+
+      // TODO: Make API call here
       // Student student = await StudentApi.login(
       //   _idController.text,
       //   _passwordController.text,
       // );
 
-      // context.read<StudentStore>().login(student);
-      // context
-      //     .read<AssignedExamStore>()
-      //     .getAssignedExams(student.id, student.token);
+      User user = User.getDummyUser();
+      context.read<UserStore>().login(user);
 
-      // AppUtils.dismissLoading();
-
+      AppUtils.dismissLoading();
       Navigator.pushReplacementNamed(context, Routes.home);
     } catch (e) {
-      // AppUtils.dismissLoading();
-      // AppUtils.showToast(e.toString());
+      AppUtils.dismissLoading();
+      AppUtils.showToast(e.toString());
     }
   }
 
