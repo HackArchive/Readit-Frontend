@@ -9,13 +9,23 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _idController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController(
+    text: "9191919191",
+  );
+  final TextEditingController _idController = TextEditingController(
+    text: "0123456789",
+  );
+  final TextEditingController _passwordController = TextEditingController(
+    text: "12345678",
+  );
+
+  bool isPhoneValid = true;
   bool isIdValid = true;
   bool isPasswordValid = true;
 
   _validateInputFields() {
     setState(() {
+      isPhoneValid = _passwordController.text.length == 10;
       isIdValid = _idController.text.length == 10;
       isPasswordValid = _passwordController.text.length >= 8;
     });
@@ -58,9 +68,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    _idController.text = "0123456789";
-    _passwordController.text = "12345678";
-
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -87,6 +94,21 @@ class _LoginPageState extends State<LoginPage> {
                   key: Key("login_app_name"),
                 )
               ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 25.0,
+              right: 25.0,
+              bottom: 10.0,
+            ),
+            child: TextField(
+              key: const Key("Strings.phoneFieldKey"),
+              controller: _phoneController,
+              decoration: InputDecoration(
+                hintText: "ID",
+                errorText: isPhoneValid ? null : "Strings.phoneFieldError",
+              ),
             ),
           ),
           Padding(
