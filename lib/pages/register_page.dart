@@ -3,35 +3,45 @@ import 'package:clock_hacks_book_reading/widgets/login/login_button.dart';
 import 'package:clock_hacks_book_reading/widgets/login/login_text_field.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController _nameController = TextEditingController(
+    text: "John Doe",
+  );
   final TextEditingController _emailController = TextEditingController(
     text: "abc@gmail.com",
+  );
+  final TextEditingController _phoneController = TextEditingController(
+    text: "0000000000",
   );
   final TextEditingController _passwordController = TextEditingController(
     text: "12345678",
   );
 
+  bool isNameValid = true;
   bool isEmailValid = true;
+  bool isPhoneValid = true;
   bool isPasswordValid = true;
 
   _validateInputFields() {
     setState(() {
+      isNameValid = _nameController.text.trim() != "";
       isEmailValid = _emailController.text.trim() != "";
+      isPhoneValid = _phoneController.text.length == 10;
       isPasswordValid = _passwordController.text.length >= 8;
     });
   }
 
-  _loginPressed(BuildContext context) async {
+  _registerPresses(BuildContext context) async {
     _validateInputFields();
 
-    if (!isEmailValid || !isPasswordValid) {
+    if (!isNameValid || !isEmailValid || !isPhoneValid || !isPasswordValid) {
       return;
     }
 
@@ -49,20 +59,18 @@ class _LoginPageState extends State<LoginPage> {
 
       // AppUtils.dismissLoading();
 
-      Navigator.pushReplacementNamed(context, Routes.home);
+      Navigator.pushReplacementNamed(context, Routes.login);
     } catch (e) {
       // AppUtils.dismissLoading();
       // AppUtils.showToast(e.toString());
     }
   }
 
-  _registerTapped(BuildContext context) async {
-    Navigator.pushReplacementNamed(context, Routes.register);
-  }
-
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -98,10 +106,23 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           LoginTextField(
+            controller: _nameController,
+            isValid: isNameValid,
+            errorText: "Strings.nameError",
+            hintText: "Name",
+          ),
+          LoginTextField(
             key: const Key("Strings.emailFieldKey"),
             controller: _emailController,
             isValid: isEmailValid,
             errorText: "Strings.emailFieldError",
+            hintText: "Email",
+          ),
+          LoginTextField(
+            key: const Key("Strings.phoneFieldKey"),
+            controller: _phoneController,
+            isValid: isPhoneValid,
+            errorText: "Strings.phoneFieldError",
             hintText: "Email",
           ),
           LoginTextField(
@@ -114,15 +135,9 @@ class _LoginPageState extends State<LoginPage> {
           ),
           const SizedBox(height: 50),
           LoginButton(
-            text: "Login",
-            onTap: () => _loginPressed(context),
-            key: const Key("Strings.loginButtonKey"),
-          ),
-          const SizedBox(height: 25),
-          LoginButton(
             text: "Register",
-            onTap: () => _registerTapped(context),
-            key: const Key("Strings.registerButtonKey"),
+            onTap: () => _registerPresses(context),
+            key: const Key("Strings.loginButtonKey"),
           ),
         ],
       ),
