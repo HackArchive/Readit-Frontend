@@ -14,6 +14,10 @@ class _HomePageState extends State<HomePage> {
     Navigator.pushReplacementNamed(context, Routes.login);
   }
 
+  addIconTapped(BuildContext context) {
+    Navigator.pushNamed(context, Routes.addBook);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +32,10 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => addIconTapped(context),
+        child: const Icon(Icons.add),
       ),
     );
   }
