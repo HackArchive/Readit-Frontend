@@ -1,7 +1,11 @@
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:clock_hacks_book_reading/models/task_model.dart';
+import 'package:clock_hacks_book_reading/network/tasks_apis.dart';
 import 'package:clock_hacks_book_reading/store/task_store.dart';
+import 'package:clock_hacks_book_reading/store/user_store.dart';
+import 'package:clock_hacks_book_reading/utils/app_utils.dart';
 import 'package:clock_hacks_book_reading/widgets/login/login_button.dart';
 import 'package:clock_hacks_book_reading/widgets/login/login_text_field.dart';
 import 'package:flutter/material.dart';
@@ -85,14 +89,36 @@ class _AddBookPageState extends State<AddBookPage> {
     );
   }
 
-  onSubmitTapped() {
+  onSubmitTapped() async {
     validateInputFields();
 
-    if (!isNameValid || !isDurationValid) {
+    if (!isNameValid || !isDurationValid || files.isEmpty) {
       return;
     }
 
-    Navigator.pop(context);
+    try {
+      AppUtils.showLoading("Logging in..");
+
+      String token = context.read<UserStore>().currentUser!.token;
+
+      bool uploadSuccessful = await TaskAPI.createTask(
+        token,
+        _taskNameController.text,
+        int.parse(_taskDurationController.text),
+        "minutes",
+        files,
+      );
+
+      // if (!uploadSuccessful) {
+      //   throw Exception("Failed to create task, please try again later!");
+      // }
+
+      AppUtils.dismissLoading();
+      Navigator.pop(context, uploadSuccessful);
+    } catch (e) {
+      AppUtils.dismissLoading();
+      AppUtils.showToast(e.toString());
+    }
   }
 
   @override

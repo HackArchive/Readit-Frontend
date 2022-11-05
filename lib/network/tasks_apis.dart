@@ -3,35 +3,52 @@
 import 'dart:convert';
 
 import 'package:clock_hacks_book_reading/models/task_model.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart' as http;
 import 'package:clock_hacks_book_reading/constants/api_endpoints.dart';
+import 'package:image_picker/image_picker.dart';
 
 // TODO: Replace dummpy data with serialized objects
 
 class TaskAPI {
-  static Future<Task> createTask(
+  static Future<bool> createTask(
     String token,
     String title,
-    String duration,
-    String durationType, {
+    int duration,
+    String durationType,
+    List<XFile> files, {
     List<String> exclude = const [],
   }) async {
-    final url = Uri.parse(APIEndpoints.createTask);
+    final String data = jsonEncode({
+      "title": title,
+      "duration_type": durationType,
+      "duration": duration,
+      "exclude": exclude.toString(),
+    });
 
-    http.Response response = await http.post(
-      url,
-      body: jsonEncode({
-        "title": title,
-        "duration_type": durationType,
-        "duration": duration,
-        "exclude": exclude.toString(),
+    final formData = dio.FormData();
+    final mapData = MapEntry("data", data);
+    formData.fields.add(mapData);
+
+    for (var file in files) {
+      final multipartFile = dio.MultipartFile.fromFileSync(file.path);
+      final imageEntry = MapEntry(
+        "images",
+        multipartFile,
+      );
+      formData.files.add(imageEntry);
+    }
+
+    dio.Response response = await dio.Dio().post(
+      APIEndpoints.createTask,
+      data: formData,
+      options: dio.Options(headers: {
+        "Content-Type": "multipart/form-data",
+        "Authorization": token,
       }),
-      headers: APIEndpoints.authHeaders(token),
     );
 
-    var jsonResponse = jsonDecode(response.body);
-
-    print(jsonResponse);
+    var jsonResponse = jsonDecode(response.data);
 
     if (response.statusCode != 200) {
       throw Exception(
@@ -40,7 +57,7 @@ class TaskAPI {
       );
     }
 
-    return Task.getDummyTask();
+    return true;
   }
 
   static Future<List<Task>> getAllTask(String token) async {
@@ -53,7 +70,7 @@ class TaskAPI {
 
     var jsonResponse = jsonDecode(response.body);
 
-    print(jsonResponse);
+    // print("HERE: $jsonResponse");
 
     if (response.statusCode != 200) {
       throw Exception(
@@ -62,7 +79,16 @@ class TaskAPI {
       );
     }
 
-    return [Task.getDummyTask()];
+    List<Task> tasks = [];
+
+    jsonResponse?.forEach((json) {
+      print(json);
+
+      Task task = Task.fromJson(json);
+      tasks.add(task);
+    });
+
+    return tasks;
   }
 
   static Future<Task> getTask(String id, String token) async {

@@ -6,6 +6,7 @@ class Task {
   final List<ToDo> todos;
   final int durationToCompleteInMinutes;
   final String userId;
+  String completed;
 
   Task({
     required this.id,
@@ -13,6 +14,7 @@ class Task {
     required this.todos,
     required this.durationToCompleteInMinutes,
     required this.userId,
+    this.completed = "0%",
   });
 
   factory Task.getDummyTask({String id = "0"}) {
@@ -27,11 +29,12 @@ class Task {
 
   factory Task.fromJson(var json) {
     return Task(
-      id: json['id'],
+      id: json['id'].toString(),
       title: json["title"],
-      todos: json["todos"], // TODO: Parse todos
-      durationToCompleteInMinutes: json["durationToCompleteInMinutes"],
-      userId: json["userId"],
+      todos: json["todos"] ?? [], // TODO: Parse todos
+      durationToCompleteInMinutes: json["duration_in_min"],
+      userId: json["userId"] ?? "",
+      completed: json["completed"],
     );
   }
 
