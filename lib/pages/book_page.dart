@@ -83,17 +83,47 @@ class BookPage extends StatelessWidget {
   Widget todoCard(BuildContext context, ToDo todo) {
     return ListTile(
       title: Text(todo.title),
-      trailing: Checkbox(
-        value: todo.isCompleted,
-        onChanged: (checked) {
-          onCompleteTapped(
-            todo.id,
-            checked ?? false,
-            todo.isInProgress,
-            PropToUpdate.isComplete,
-            context,
-          );
-        },
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Checkbox(
+            value: todo.isCompleted,
+            onChanged: (checked) {
+              onCompleteTapped(
+                todo.id,
+                checked ?? false,
+                todo.isInProgress,
+                PropToUpdate.isComplete,
+                context,
+              );
+            },
+          ),
+          GestureDetector(
+            onTap: () {
+              onCompleteTapped(
+                todo.id,
+                todo.isCompleted,
+                !todo.isInProgress,
+                PropToUpdate.isInProgress,
+                context,
+              );
+            },
+            child: Container(
+              height: 18,
+              width: 18,
+              decoration: BoxDecoration(
+                color: todo.isInProgress
+                    ? Colors.orangeAccent
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: todo.isInProgress ? Colors.orangeAccent : Colors.grey,
+                  width: 2,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
