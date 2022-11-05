@@ -6,6 +6,7 @@ import 'package:clock_hacks_book_reading/store/user_store.dart';
 import 'package:clock_hacks_book_reading/utils/app_utils.dart';
 import 'package:clock_hacks_book_reading/widgets/home/task_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,9 +28,7 @@ class _HomePageState extends State<HomePage> {
       AppUtils.showLoading("Loading tasks...");
 
       String token = context.read<UserStore>().currentUser!.token;
-      // List<Task> tasks = await TaskAPI.getAllTask(token);
-
-      List<Task> tasks = [Task.getDummyTask(), Task.getDummyTask(id: "1")];
+      List<Task> tasks = await TaskAPI.getAllTask(token);
 
       context.read<TaskStore>().setTasks(tasks);
 
@@ -58,13 +57,17 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-          child: Column(
-            children: context
-                .watch<TaskStore>()
-                .userTasks
-                .map((task) => TaskCard(task: task))
-                .toList(),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+          child: Observer(
+            builder: (BuildContext context) {
+              return Column(
+                children: context
+                    .watch<TaskStore>()
+                    .userTasks
+                    .map((task) => TaskCard(task: task))
+                    .toList(),
+              );
+            },
           ),
         ),
       ),

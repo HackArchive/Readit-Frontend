@@ -5,9 +5,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class APIEndpoints {
   APIEndpoints._();
 
-  // static final String baseUrl = "http://localhost:5000";
-  static final String baseUrl =
-      dotenv.env['BACKEND_URL'] ?? "http://localhost:5000";
+  static String baseUrl = "http://localhost:5000";
+  // static final String baseUrl =
+  //     dotenv.env['BACKEND_URL'] ?? "http://localhost:5000";
 
   // Auth
   static final String login = "$baseUrl/auth/login";
@@ -26,6 +26,6 @@ class APIEndpoints {
   };
 
   static Map<String, String> authHeaders(String token) => {
-        HttpHeaders.authorizationHeader: "Bearer $token",
+        HttpHeaders.authorizationHeader: token,
       };
 }
