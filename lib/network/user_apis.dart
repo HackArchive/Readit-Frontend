@@ -7,18 +7,16 @@ import 'package:clock_hacks_book_reading/constants/api_endpoints.dart';
 import 'package:clock_hacks_book_reading/models/user_model.dart';
 
 class UserAPI {
-  static Future<User> login(String id, String password) async {
+  static Future<User> login(String email, String password) async {
     final url = Uri.parse(APIEndpoints.login);
 
     http.Response response = await http.post(
       url,
-      body: jsonEncode({"id": id, "password": password}),
+      body: jsonEncode({"email": email, "password": password}),
       headers: APIEndpoints.postHeaders,
     );
 
     var jsonResponse = jsonDecode(response.body);
-
-    print(jsonResponse);
 
     if (response.statusCode != 200) {
       throw Exception(
@@ -50,8 +48,6 @@ class UserAPI {
     );
 
     var jsonResponse = jsonDecode(response.body);
-
-    print(jsonResponse);
 
     if (response.statusCode != 200) {
       throw Exception(

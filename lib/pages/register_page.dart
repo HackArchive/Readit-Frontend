@@ -20,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
     text: "abc@gmail.com",
   );
   final TextEditingController _phoneController = TextEditingController(
-    text: "0000000000",
+    text: "+910000000000",
   );
   final TextEditingController _passwordController = TextEditingController(
     text: "12345678",
@@ -35,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
     setState(() {
       isNameValid = _nameController.text.trim() != "";
       isEmailValid = _emailController.text.trim() != "";
-      isPhoneValid = _phoneController.text.length == 10;
+      isPhoneValid = _phoneController.text.length == 13;
       isPasswordValid = _passwordController.text.length >= 8;
     });
   }

@@ -43,10 +43,8 @@ class _LoginPageState extends State<LoginPage> {
     try {
       AppUtils.showLoading("Logging in..");
 
-      // User user =
-      //     await UserAPI.login(_emailController.text, _passwordController.text);
-
-      User user = User.getDummyUser();
+      User user =
+          await UserAPI.login(_emailController.text, _passwordController.text);
 
       context.read<UserStore>().login(user);
 

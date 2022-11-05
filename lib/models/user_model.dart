@@ -1,5 +1,5 @@
 class User {
-  final String id;
+  final int id;
   final String name;
   final String email;
   final String phone;
@@ -15,7 +15,7 @@ class User {
 
   factory User.getDummyUser() {
     return User(
-      id: "0",
+      id: 0,
       name: "John Doe",
       email: "john@gmail.com",
       phone: "9100910091",
@@ -25,10 +25,10 @@ class User {
 
   factory User.fromJson(var json) {
     return User(
-      id: json["id"],
-      name: json["name"],
-      email: json["email"],
-      phone: json["phone"],
+      id: json["user"]["id"],
+      name: json["user"]["name"],
+      email: json["user"]["email"],
+      phone: json["user"]["phone_number"],
       token: json["token"],
     );
   }
