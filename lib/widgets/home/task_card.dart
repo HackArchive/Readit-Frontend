@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:clock_hacks_book_reading/constants/routes.dart';
 import 'package:clock_hacks_book_reading/models/task_model.dart';
 import 'package:clock_hacks_book_reading/store/task_store.dart';
