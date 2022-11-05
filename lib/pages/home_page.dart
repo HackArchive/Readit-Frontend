@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
 
   PreferredSizeWidget _buildAppBar(context) {
     return AppBar(
-      title: const Text("Welcome"),
+      title: const Text("ReatIT"),
       actions: [
         IconButton(
           icon: const Icon(Icons.logout),

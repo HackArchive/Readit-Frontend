@@ -3,11 +3,11 @@ import 'package:clock_hacks_book_reading/models/todo_model.dart';
 class Task {
   final String id;
   final String title;
-  List<ToDo> todos;
   final int durationToCompleteInMinutes;
-  final String userId;
   final bool isCanceled;
   String completed;
+  List<ToDo> todos;
+  String userId;
 
   Task({
     required this.id,
@@ -28,6 +28,16 @@ class Task {
         userId: "0",
         isCanceled: false,
         completed: "0.0%");
+  }
+
+  factory Task.fromTask(Task task) {
+    return Task(
+      id: task.id,
+      title: task.title,
+      durationToCompleteInMinutes: task.durationToCompleteInMinutes,
+      userId: task.userId,
+      isCanceled: task.isCanceled,
+    );
   }
 
   factory Task.fromJson(var json) {

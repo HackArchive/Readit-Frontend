@@ -117,26 +117,24 @@ class TaskAPI {
     return todos;
   }
 
-  static Future<Task> updateTask(
-    String id,
-    bool isCanceled,
-    bool isCompleted,
-    String token,
-  ) async {
-    final url = Uri.parse(APIEndpoints.updateTask(id));
+  static Future<bool> updateTodo({
+    required int id,
+    required bool isCompleted,
+    required bool isInProgress,
+    required String token,
+  }) async {
+    final url = Uri.parse(APIEndpoints.updateTodo(id));
 
     http.Response response = await http.post(
       url,
-      body: {
-        "is_canceled": isCanceled.toString(),
-        "is_completed": isCompleted.toString(),
-      },
-      headers: APIEndpoints.authHeaders(token),
+      body: jsonEncode({
+        "is_completed": isCompleted,
+        "is_inprogress": isInProgress,
+      }),
+      headers: APIEndpoints.postAuthHeaders(token),
     );
 
     var jsonResponse = jsonDecode(response.body);
-
-    print(jsonResponse);
 
     if (response.statusCode != 200) {
       throw Exception(
@@ -145,6 +143,6 @@ class TaskAPI {
       );
     }
 
-    return Task.getDummyTask();
+    return true;
   }
 }

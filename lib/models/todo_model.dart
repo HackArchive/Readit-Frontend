@@ -1,8 +1,8 @@
 class ToDo {
   final int id;
   final String title;
-  final bool isCompleted;
-  final bool isInProgress;
+  bool isCompleted;
+  bool isInProgress;
   final String taskId;
 
   ToDo({

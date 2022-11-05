@@ -8,6 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
+enum PropToUpdate {
+  isComplete,
+  isInProgress,
+}
+
 class BookPage extends StatelessWidget {
   const BookPage({Key? key}) : super(key: key);
 
@@ -30,6 +35,69 @@ class BookPage extends StatelessWidget {
     }
   }
 
+  onCompleteTapped(
+    int id,
+    bool isComplete,
+    bool isInProgress,
+    PropToUpdate propToUpdate,
+    BuildContext context,
+  ) async {
+    final Task activeTask = context.read<TaskStore>().activeTask!;
+    final ToDo targetTodo =
+        activeTask.todos.firstWhere((todo) => todo.id == id);
+
+    try {
+      String token = context.read<UserStore>().currentUser!.token;
+
+      targetTodo.isCompleted = isComplete;
+      targetTodo.isInProgress = isInProgress;
+
+      context.read<TaskStore>().setActiveTask(activeTask);
+
+      bool success = await TaskAPI.updateTodo(
+        id: id,
+        isCompleted: isComplete,
+        isInProgress: isInProgress,
+        token: token,
+      );
+
+      if (!success) {
+        throw Exception("Failed to mark complete");
+      }
+
+      AppUtils.dismissLoading();
+    } catch (e) {
+      if (propToUpdate == PropToUpdate.isComplete) {
+        targetTodo.isCompleted = !isComplete;
+      } else {
+        targetTodo.isInProgress = !isInProgress;
+      }
+
+      context.read<TaskStore>().setActiveTask(activeTask);
+
+      AppUtils.dismissLoading();
+      AppUtils.showToast(e.toString());
+    }
+  }
+
+  Widget todoCard(BuildContext context, ToDo todo) {
+    return ListTile(
+      title: Text(todo.title),
+      trailing: Checkbox(
+        value: todo.isCompleted,
+        onChanged: (checked) {
+          onCompleteTapped(
+            todo.id,
+            checked ?? false,
+            todo.isInProgress,
+            PropToUpdate.isComplete,
+            context,
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final Task? task = context.read<TaskStore>().activeTask;
@@ -39,16 +107,29 @@ class BookPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Book Page'),
       ),
-      body: Observer(
-        builder: (context) => Container(
-          padding: const EdgeInsets.all(0),
-          child: task == null
-              ? const Text('Loading')
-              : Text(
-                  task.todos.length.toString(),
-                ),
-        ),
-      ),
+      body: task == null
+          ? const Text('Loading...')
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text(
+                    task.title,
+                    style: const TextStyle(fontSize: 24),
+                  ),
+                  const SizedBox(height: 30),
+                  Observer(
+                    builder: (context) => Column(
+                      children: context
+                          .watch<TaskStore>()
+                          .activeTask!
+                          .todos
+                          .map((todo) => todoCard(context, todo))
+                          .toList(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }

@@ -17,6 +17,7 @@ class APIEndpoints {
   static final String createTask = "$baseUrl/add";
   static final String getAllTask = "$baseUrl/";
   static String getTask(String id) => "$baseUrl/$id";
+  static String updateTodo(int id) => "$baseUrl/update_todo/$id";
   static String updateTask(String id) => "$baseUrl/update_task/$id";
 
   // Headers
@@ -26,6 +27,12 @@ class APIEndpoints {
   };
 
   static Map<String, String> authHeaders(String token) => {
+        HttpHeaders.authorizationHeader: token,
+      };
+
+  static Map<String, String> postAuthHeaders(String token) => {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
         HttpHeaders.authorizationHeader: token,
       };
 }
