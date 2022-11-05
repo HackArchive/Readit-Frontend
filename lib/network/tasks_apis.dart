@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:clock_hacks_book_reading/models/task_model.dart';
+import 'package:clock_hacks_book_reading/models/todo_model.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart' as http;
 import 'package:clock_hacks_book_reading/constants/api_endpoints.dart';
@@ -82,8 +83,6 @@ class TaskAPI {
     List<Task> tasks = [];
 
     jsonResponse?.forEach((json) {
-      print(json);
-
       Task task = Task.fromJson(json);
       tasks.add(task);
     });
@@ -91,7 +90,7 @@ class TaskAPI {
     return tasks;
   }
 
-  static Future<Task> getTask(String id, String token) async {
+  static Future<List<ToDo>> getTodoItems(String id, String token) async {
     final url = Uri.parse(APIEndpoints.getTask(id));
 
     http.Response response = await http.get(
@@ -101,16 +100,21 @@ class TaskAPI {
 
     var jsonResponse = jsonDecode(response.body);
 
-    print(jsonResponse);
-
     if (response.statusCode != 200) {
       throw Exception(
         jsonResponse["err"] ??
-            "Failed to get task with error code ${response.statusCode}",
+            "Failed to get todo items with error code ${response.statusCode}",
       );
     }
 
-    return Task.getDummyTask();
+    List<ToDo> todos = [];
+
+    jsonResponse.forEach((json) {
+      ToDo todo = ToDo.fromJson(json);
+      todos.add(todo);
+    });
+
+    return todos;
   }
 
   static Future<Task> updateTask(

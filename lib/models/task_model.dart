@@ -3,28 +3,31 @@ import 'package:clock_hacks_book_reading/models/todo_model.dart';
 class Task {
   final String id;
   final String title;
-  final List<ToDo> todos;
+  List<ToDo> todos;
   final int durationToCompleteInMinutes;
   final String userId;
+  final bool isCanceled;
   String completed;
 
   Task({
     required this.id,
     required this.title,
-    required this.todos,
+    this.todos = const [],
     required this.durationToCompleteInMinutes,
     required this.userId,
+    required this.isCanceled,
     this.completed = "0%",
   });
 
   factory Task.getDummyTask({String id = "0"}) {
     return Task(
-      id: id,
-      title: "Task $id",
-      todos: [ToDo.getDummyToDo(), ToDo.getDummyToDo(id: "1")],
-      durationToCompleteInMinutes: 60,
-      userId: "0",
-    );
+        id: id,
+        title: "Task $id",
+        todos: [ToDo.getDummyToDo(), ToDo.getDummyToDo(id: 1)],
+        durationToCompleteInMinutes: 60,
+        userId: "0",
+        isCanceled: false,
+        completed: "0.0%");
   }
 
   factory Task.fromJson(var json) {
@@ -35,6 +38,7 @@ class Task {
       durationToCompleteInMinutes: json["duration_in_min"],
       userId: json["userId"] ?? "",
       completed: json["completed"],
+      isCanceled: json["is_canceled"],
     );
   }
 
@@ -45,6 +49,7 @@ class Task {
       "todos": [], // TODO: Serialize Todos
       "durationToCompleteInMinutes": durationToCompleteInMinutes,
       "userId": userId,
+      "is_canceled": isCanceled,
     };
   }
 }

@@ -1,5 +1,5 @@
 class ToDo {
-  final String id;
+  final int id;
   final String title;
   final bool isCompleted;
   final bool isInProgress;
@@ -10,10 +10,10 @@ class ToDo {
     required this.title,
     required this.isCompleted,
     required this.isInProgress,
-    required this.taskId,
+    this.taskId = "",
   });
 
-  factory ToDo.getDummyToDo({String id = "0", String taskId = "0"}) {
+  factory ToDo.getDummyToDo({int id = 0, String taskId = "0"}) {
     return ToDo(
       id: id,
       title: "Todo $id",
@@ -27,9 +27,9 @@ class ToDo {
     return ToDo(
       id: json['id'],
       title: json["title"],
-      isCompleted: json["isComplete"],
-      isInProgress: json["isInProgress"],
-      taskId: json["taskId"],
+      isCompleted: json["is_completed"],
+      isInProgress: json["is_inprogress"],
+      taskId: json["taskId"] ?? "",
     );
   }
 
