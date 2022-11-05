@@ -1,16 +1,17 @@
-# clock_hacks_book_reading
+# ReadIT (Frontend) (ClockHacks)
 
-Hackathon Nov 22 - Clock Hacks - App which helps users complete books
+<img src="https://user-images.githubusercontent.com/68425016/200112210-676c7b74-3768-4a0e-a012-2651601cee34.jpeg" width="100">
 
-## Getting Started
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+###### Readit helps readers build discipline.
+###### Incentivize your Reading discipline.  
+# About 
+- ReadIt is an Mobile application that helps people make todo's from index page of a book by capturing image of Index page. So they can make a schedule in how much time they want to complete the book and will get whatssapp message reminders and motivational messages to complete the task that you've started.
 
-This project is a starting point for a Flutter application.
+- You will get free Amazon Book Coupons on completing a Task(Book). 
+As you complete more and more Tasks(Books) you will be incentivize. 
 
-A few resources to get you started if this is your first Flutter project:
+## Setup (Frontend)
+- install dependencies using ```flutter pub get```
+- ```flutter run```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
