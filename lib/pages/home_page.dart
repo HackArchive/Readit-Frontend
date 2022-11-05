@@ -46,7 +46,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   addIconTapped(BuildContext context) {
-    Navigator.pushNamed(context, Routes.addBook);
+    Navigator.pushNamed(context, Routes.addBook).then((value) {
+      getUserTasks(context);
+    });
   }
 
   @override
