@@ -18,7 +18,7 @@ class APIEndpoints {
   static final String getAllTask = "$baseUrl/";
   static String getTask(String id) => "$baseUrl/$id";
   static String updateTodo(int id) => "$baseUrl/update_todo/$id";
-  static String updateTask(String id) => "$baseUrl/update_task/$id";
+  static String updateTask(int id) => "$baseUrl/update_task/$id";
 
   // Headers
   static const Map<String, String> postHeaders = {

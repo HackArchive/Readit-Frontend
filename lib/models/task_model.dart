@@ -4,7 +4,8 @@ class Task {
   final String id;
   final String title;
   final int durationToCompleteInMinutes;
-  final bool isCanceled;
+  bool isCompleted;
+  bool isCanceled;
   String completed;
   List<ToDo> todos;
   String userId;
@@ -12,22 +13,24 @@ class Task {
   Task({
     required this.id,
     required this.title,
-    this.todos = const [],
     required this.durationToCompleteInMinutes,
-    required this.userId,
-    required this.isCanceled,
+    this.isCompleted = false,
+    this.isCanceled = false,
     this.completed = "0%",
+    this.todos = const [],
+    required this.userId,
   });
 
   factory Task.getDummyTask({String id = "0"}) {
     return Task(
-        id: id,
-        title: "Task $id",
-        todos: [ToDo.getDummyToDo(), ToDo.getDummyToDo(id: 1)],
-        durationToCompleteInMinutes: 60,
-        userId: "0",
-        isCanceled: false,
-        completed: "0.0%");
+      id: id,
+      title: "Task $id",
+      todos: [ToDo.getDummyToDo(), ToDo.getDummyToDo(id: 1)],
+      durationToCompleteInMinutes: 60,
+      userId: "0",
+      isCanceled: false,
+      completed: "0.0%",
+    );
   }
 
   factory Task.fromTask(Task task) {
@@ -44,11 +47,12 @@ class Task {
     return Task(
       id: json['id'].toString(),
       title: json["title"],
-      todos: json["todos"] ?? [], // TODO: Parse todos
       durationToCompleteInMinutes: json["duration_in_min"],
-      userId: json["userId"] ?? "",
-      completed: json["completed"],
+      isCompleted: json['is_completed'],
       isCanceled: json["is_canceled"],
+      completed: json["completed"],
+      todos: json["todos"] ?? [], // TODO: Parse todos
+      userId: json["userId"] ?? "",
     );
   }
 

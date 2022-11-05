@@ -71,8 +71,6 @@ class TaskAPI {
 
     var jsonResponse = jsonDecode(response.body);
 
-    // print("HERE: $jsonResponse");
-
     if (response.statusCode != 200) {
       throw Exception(
         jsonResponse["err"] ??
@@ -138,8 +136,38 @@ class TaskAPI {
 
     if (response.statusCode != 200) {
       throw Exception(
-        jsonResponse["err"] ??
-            "Failed to get task with error code ${response.statusCode}",
+        jsonResponse["err"] ?? "Failed to update todo ${response.statusCode}",
+      );
+    }
+
+    return true;
+  }
+
+  static Future<bool> updateTask({
+    required int id,
+    required bool isCompleted,
+    required bool isCancelled,
+    required String token,
+  }) async {
+    final url = Uri.parse(APIEndpoints.updateTask(id));
+
+    http.Response response = await http.post(
+      url,
+      body: jsonEncode({
+        "is_completed": isCompleted,
+        "is_canceled": isCancelled,
+      }),
+      headers: APIEndpoints.postAuthHeaders(token),
+    );
+
+    var jsonResponse = jsonDecode(response.body);
+
+    print(jsonResponse);
+
+    if (response.statusCode != 200) {
+      throw Exception(
+        jsonResponse["cannot complete"] ??
+            "Failed to update task ${response.statusCode}",
       );
     }
 
