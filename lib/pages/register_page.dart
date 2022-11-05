@@ -58,7 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
       );
 
       if (!registrationSuccessful) {
-        throw Exception("Failed to register, please try again later")
+        throw Exception("Failed to register, please try again later");
       }
 
       // If login successful, redirect

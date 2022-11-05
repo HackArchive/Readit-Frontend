@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:clock_hacks_book_reading/store/task_store.dart';
 import 'package:clock_hacks_book_reading/widgets/login/login_button.dart';
 import 'package:clock_hacks_book_reading/widgets/login/login_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class AddBookPage extends StatefulWidget {
   const AddBookPage({Key? key}) : super(key: key);
@@ -22,6 +24,14 @@ class _AddBookPageState extends State<AddBookPage> {
 
   bool isNameValid = true;
   bool isDurationValid = true;
+
+  @override
+  void dispose() {
+    _taskNameController.dispose();
+    _taskDurationController.dispose();
+
+    super.dispose();
+  }
 
   validateInputFields() {
     setState(() {

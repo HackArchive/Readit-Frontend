@@ -1,5 +1,10 @@
 import 'package:clock_hacks_book_reading/constants/routes.dart';
+import 'package:clock_hacks_book_reading/models/task_model.dart';
+import 'package:clock_hacks_book_reading/network/tasks_apis.dart';
+import 'package:clock_hacks_book_reading/store/task_store.dart';
 import 'package:clock_hacks_book_reading/store/user_store.dart';
+import 'package:clock_hacks_book_reading/utils/app_utils.dart';
+import 'package:clock_hacks_book_reading/widgets/home/task_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +16,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    getUserTasks(context);
+  }
+
+  getUserTasks(BuildContext context) async {
+    try {
+      AppUtils.showLoading("Loading tasks...");
+
+      String token = context.read<UserStore>().currentUser!.token;
+      // List<Task> tasks = await TaskAPI.getAllTask(token);
+
+      List<Task> tasks = [Task.getDummyTask(), Task.getDummyTask(id: "1")];
+
+      context.read<TaskStore>().setTasks(tasks);
+
+      AppUtils.dismissLoading();
+    } catch (e) {
+      AppUtils.dismissLoading();
+      AppUtils.showToast(e.toString());
+    }
+  }
+
   logout(BuildContext context) {
     context.read<UserStore>().logout();
     Navigator.pushReplacementNamed(context, Routes.login);
@@ -29,9 +58,11 @@ class _HomePageState extends State<HomePage> {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
           child: Column(
-            children: const [
-              Text("Home Page"),
-            ],
+            children: context
+                .watch<TaskStore>()
+                .userTasks
+                .map((task) => TaskCard(task: task))
+                .toList(),
           ),
         ),
       ),

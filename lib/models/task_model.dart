@@ -15,10 +15,10 @@ class Task {
     required this.userId,
   });
 
-  factory Task.getDummyTask() {
+  factory Task.getDummyTask({String id = "0"}) {
     return Task(
-      id: "0",
-      title: "Task 0",
+      id: id,
+      title: "Task $id",
       todos: [ToDo.getDummyToDo(), ToDo.getDummyToDo(id: "1")],
       durationToCompleteInMinutes: 60,
       userId: "0",

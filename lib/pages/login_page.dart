@@ -43,10 +43,12 @@ class _LoginPageState extends State<LoginPage> {
     try {
       AppUtils.showLoading("Logging in..");
 
-      User user =
-          await UserAPI.login(_emailController.text, _passwordController.text);
+      // User user =
+      //     await UserAPI.login(_emailController.text, _passwordController.text);
 
-      context.read<UserStore>().login(user);
+      User dummyUser = User.getDummyUser();
+
+      context.read<UserStore>().login(dummyUser);
 
       AppUtils.dismissLoading();
       Navigator.pushReplacementNamed(context, Routes.home);
