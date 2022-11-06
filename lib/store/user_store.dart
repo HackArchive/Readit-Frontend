@@ -30,8 +30,14 @@ abstract class UserStoreBase with Store {
 
   @action
   setUserProfileData(int booksCompleted, int booksPending, int booksCanceled) {
+    if (currentUser == null) {
+      return;
+    }
+
     currentUser?.booksPending = booksPending;
     currentUser?.booksCompleted = booksCompleted;
     currentUser?.booksCanceled = booksCanceled;
+
+    currentUser = User.fromUser(currentUser!);
   }
 }

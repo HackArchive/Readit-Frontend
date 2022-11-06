@@ -39,6 +39,19 @@ class User {
     );
   }
 
+  factory User.fromUser(User user) {
+    return User(
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      token: user.token,
+      booksPending: user.booksPending,
+      booksCompleted: user.booksCompleted,
+      booksCanceled: user.booksCanceled,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       "id": id,
