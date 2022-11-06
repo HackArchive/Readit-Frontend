@@ -1,3 +1,4 @@
+import 'package:clock_hacks_book_reading/constants/routes.dart';
 import 'package:clock_hacks_book_reading/models/user_model.dart';
 import 'package:clock_hacks_book_reading/network/user_apis.dart';
 import 'package:clock_hacks_book_reading/store/user_store.dart';
@@ -53,7 +54,14 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  onLogout(BuildContext context) {}
+  onLogout(BuildContext context) async {
+    context.read<UserStore>().logout();
+
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      Routes.login,
+      (route) => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
