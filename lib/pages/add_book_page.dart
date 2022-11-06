@@ -53,6 +53,20 @@ class _AddBookPageState extends State<AddBookPage> {
     });
   }
 
+  onCameraTapped() async {
+    XFile? file = await _imagePicker.pickImage(source: ImageSource.camera);
+
+    if (file == null) {
+      return;
+    }
+
+    files.add(file);
+
+    setState(() {
+      files = files.toList();
+    });
+  }
+
   placeholderImage() {
     return Container(
       height: MediaQuery.of(context).size.height * 0.40,
@@ -153,7 +167,7 @@ class _AddBookPageState extends State<AddBookPage> {
           child: Column(
             children: [
               files.isEmpty ? placeholderImage() : buildCarousel(),
-              const SizedBox(width: 0, height: 30),
+              const SizedBox(width: 0, height: 10),
               LoginTextField(
                 controller: _taskNameController,
                 isValid: isNameValid,
@@ -193,7 +207,7 @@ class _AddBookPageState extends State<AddBookPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               LoginButton(
                 text: "SUBMIT",
                 onTap: onSubmitTapped,
@@ -202,6 +216,10 @@ class _AddBookPageState extends State<AddBookPage> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => onCameraTapped(),
+        child: const Icon(Icons.camera_alt),
       ),
     );
   }
