@@ -109,8 +109,6 @@ class _HomePageState extends State<HomePage> {
     if (result == true) {
       getUserTasks(context);
     }
-
-    AppUtils.showToast(result.runtimeType.toString());
   }
 
   @override
