@@ -23,21 +23,28 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: ListTile(
         onTap: () => onCardTapped(context, task),
-        onLongPress: () {},
         title: Text(
           task.title,
           style: TextStyle(
             decoration: task.isCanceled
                 ? TextDecoration.lineThrough
                 : TextDecoration.none,
+            fontSize: 18,
           ),
         ),
         subtitle: Text(task.completed),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             IconButton(
               onPressed: () {
