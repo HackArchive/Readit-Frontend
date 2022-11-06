@@ -40,7 +40,7 @@ class Task {
       durationToCompleteInMinutes: task.durationToCompleteInMinutes,
       isCompleted: task.isCompleted,
       isCanceled: task.isCanceled,
-      todos: task.todos,
+      todos: task.todos.toList(),
       userId: task.userId,
     );
   }

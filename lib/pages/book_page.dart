@@ -14,7 +14,8 @@ enum PropToUpdate {
 }
 
 class BookPage extends StatelessWidget {
-  const BookPage({Key? key}) : super(key: key);
+  BookPage({Key? key}) : super(key: key);
+  bool didUpdate = false;
 
   getTask(BuildContext context) async {
     try {
@@ -64,6 +65,8 @@ class BookPage extends StatelessWidget {
       if (!success) {
         throw Exception("Failed to mark complete");
       }
+
+      didUpdate = true;
 
       AppUtils.dismissLoading();
     } catch (e) {
@@ -139,25 +142,32 @@ class BookPage extends StatelessWidget {
       ),
       body: task == null
           ? const Text('Loading...')
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  Text(
-                    task.title,
-                    style: const TextStyle(fontSize: 24),
-                  ),
-                  const SizedBox(height: 30),
-                  Observer(
-                    builder: (context) => Column(
-                      children: context
-                          .watch<TaskStore>()
-                          .activeTask!
-                          .todos
-                          .map((todo) => todoCard(context, todo))
-                          .toList(),
+          : WillPopScope(
+              onWillPop: () async {
+                Navigator.pop(context, didUpdate);
+
+                return false;
+              },
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(
+                      task.title,
+                      style: const TextStyle(fontSize: 24),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 30),
+                    Observer(
+                      builder: (context) => Column(
+                        children: context
+                            .watch<TaskStore>()
+                            .activeTask!
+                            .todos
+                            .map((todo) => todoCard(context, todo))
+                            .toList(),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
     );

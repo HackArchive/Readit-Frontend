@@ -101,6 +101,18 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  onCardTapped(BuildContext context, Task task) async {
+    context.read<TaskStore>().setActiveTask(task);
+
+    final result = await Navigator.pushNamed(context, Routes.book);
+
+    if (result == true) {
+      getUserTasks(context);
+    }
+
+    AppUtils.showToast(result.runtimeType.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,6 +131,7 @@ class _HomePageState extends State<HomePage> {
                       (task) => TaskCard(
                         task: task,
                         onCompleteTapped: onCompleteTapped,
+                        onCardTapped: onCardTapped,
                       ),
                     )
                     .toList(),

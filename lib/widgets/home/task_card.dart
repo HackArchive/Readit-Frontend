@@ -15,18 +15,14 @@ enum PropToUpdate {
 class TaskCard extends StatelessWidget {
   final Task task;
   final Function onCompleteTapped;
+  final Function onCardTapped;
 
   const TaskCard({
     Key? key,
     required this.task,
     required this.onCompleteTapped,
+    required this.onCardTapped,
   }) : super(key: key);
-
-  onCardTapped(BuildContext context) {
-    context.read<TaskStore>().setActiveTask(task);
-
-    Navigator.pushNamed(context, Routes.book);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +30,7 @@ class TaskCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       child: ListTile(
-        onTap: () => onCardTapped(context),
+        onTap: () => onCardTapped(context, task),
         onLongPress: () {},
         title: Text(
           task.title,

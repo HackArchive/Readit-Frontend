@@ -21,6 +21,6 @@ class Routes {
     register: (BuildContext context) => const RegisterPage(),
     home: (BuildContext context) => const HomePage(),
     addBook: (BuildContext context) => const AddBookPage(),
-    book: (BuildContext context) => const BookPage(),
+    book: (BuildContext context) => BookPage(),
   };
 }
