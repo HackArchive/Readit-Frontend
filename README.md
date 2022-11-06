@@ -7,7 +7,7 @@
 ###### Incentivize your Reading discipline.  
 # About 
 - ReadIt is an Mobile application that helps people make todo's from index page of a book by capturing image of Index page. So they can make a schedule in how much time they want to complete the book and will get whatssapp message reminders and motivational messages to complete the task that you've started.
-
+- It also send whatsapp reminders through messages. and gives motivation quotes to help you complete what you started 
 - You will get free Amazon Book Coupons on completing a Task(Book). 
 As you complete more and more Tasks(Books) you will be incentivize. 
 
