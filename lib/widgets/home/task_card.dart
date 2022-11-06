@@ -48,8 +48,13 @@ class TaskCard extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
+                if (task.isCompleted) {
+                  AppUtils.showToast("Task already marked complete!");
+                  return;
+                }
+
                 if (task.isCanceled) {
-                  AppUtils.showToast("Task Already Cancelled");
+                  AppUtils.showToast("Task already Cancelled!");
                   return;
                 }
 
@@ -70,8 +75,13 @@ class TaskCard extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
+                if (task.isCompleted) {
+                  AppUtils.showToast("Task already marked complete!");
+                  return;
+                }
+
                 if (task.isCanceled) {
-                  AppUtils.showToast("Task Already Cancelled");
+                  AppUtils.showToast("Task already Cancelled!");
                   return;
                 }
 
