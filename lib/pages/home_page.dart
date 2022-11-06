@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   userIconTapped(BuildContext context) {
-    context.read<UserStore>().logout();
     Navigator.pushReplacementNamed(context, Routes.profile);
   }
 
