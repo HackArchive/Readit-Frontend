@@ -1,6 +1,7 @@
 import 'package:clock_hacks_book_reading/constants/routes.dart';
 import 'package:clock_hacks_book_reading/models/task_model.dart';
 import 'package:clock_hacks_book_reading/network/tasks_apis.dart';
+import 'package:clock_hacks_book_reading/network/user_apis.dart';
 import 'package:clock_hacks_book_reading/store/task_store.dart';
 import 'package:clock_hacks_book_reading/store/user_store.dart';
 import 'package:clock_hacks_book_reading/utils/app_utils.dart';
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     getUserTasks(context);
+    getProfile(context);
   }
 
   getUserTasks(BuildContext context) async {
@@ -37,6 +39,17 @@ class _HomePageState extends State<HomePage> {
       AppUtils.dismissLoading();
       AppUtils.showToast(e.toString());
     }
+  }
+
+  getProfile(BuildContext context) async {
+    String token = context.read<UserStore>().currentUser!.token;
+    dynamic profileData = await UserAPI.getProfile(token);
+
+    context.read<UserStore>().setUserProfileData(
+          profileData["books_completed"],
+          profileData["books_pending"],
+          profileData["books_canceled"],
+        );
   }
 
   userIconTapped(BuildContext context) {
