@@ -63,7 +63,7 @@ class TaskCard extends StatelessWidget {
                 task.isCompleted
                     ? Icons.assignment_turned_in
                     : Icons.assignment_turned_in_outlined,
-                color: Colors.lightGreen,
+                color: task.isCompleted ? Colors.lightGreen : Colors.grey,
               ),
             ),
             IconButton(
@@ -83,7 +83,7 @@ class TaskCard extends StatelessWidget {
               },
               icon: Icon(
                 task.isCanceled ? Icons.cancel_rounded : Icons.cancel_outlined,
-                color: Colors.redAccent,
+                color: task.isCanceled ? Colors.redAccent : Colors.grey,
               ),
             )
           ],
