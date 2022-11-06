@@ -93,15 +93,18 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.only(bottom: 50),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                // Image.asset(
-                //   'assets/images/logo.png',
-                //   scale: 3,
-                //   key: const Key("login_logo"),
-                // ),
-                SizedBox(height: 10),
-                Text(
-                  "BOOK APP",
+              children: [
+                SizedBox(
+                  height: 100,
+                  child: Image.asset(
+                    'assets/images/readit_logo.jpeg',
+                    scale: 1,
+                    key: const Key("login_logo"),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  "ReadIT",
                   style: TextStyle(
                     fontFamily: "assets/fonts/Roboto-Medium.ttf",
                     fontSize: 30,

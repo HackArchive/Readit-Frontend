@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:clock_hacks_book_reading/constants/routes.dart';
 import 'package:clock_hacks_book_reading/models/user_model.dart';
 import 'package:clock_hacks_book_reading/network/user_apis.dart';
@@ -77,20 +79,23 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.only(bottom: 50),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                // Image.asset(
-                //   'assets/images/logo.png',
-                //   scale: 3,
-                //   key: const Key("login_logo"),
-                // ),
-                SizedBox(height: 10),
-                Text(
-                  "BOOK APP",
-                  style: TextStyle(
+              children: [
+                SizedBox(
+                  height: 100,
+                  child: Image.asset(
+                    'assets/images/readit_logo.jpeg',
+                    scale: 1,
+                    key: const Key("login_logo"),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  "ReadIT",
+                  style: const TextStyle(
                     fontFamily: "assets/fonts/Roboto-Medium.ttf",
                     fontSize: 30,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xff34656d),
+                    color: const Color(0xff34656d),
                   ),
                   key: Key("login_app_name"),
                 )
