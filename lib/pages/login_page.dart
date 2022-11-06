@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _registerTapped(BuildContext context) async {
-    Navigator.pushReplacementNamed(context, Routes.register);
+    Navigator.pushNamed(context, Routes.register);
   }
 
   @override
