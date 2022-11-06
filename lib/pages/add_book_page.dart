@@ -112,7 +112,7 @@ class _AddBookPageState extends State<AddBookPage> {
     }
 
     try {
-      AppUtils.showLoading("Logging in..");
+      AppUtils.showLoading("Adding Book...");
 
       String token = context.read<UserStore>().currentUser!.token;
 
@@ -129,6 +129,7 @@ class _AddBookPageState extends State<AddBookPage> {
       // }
 
       AppUtils.dismissLoading();
+      // Navigator.pop(context);
       Navigator.pop(context, uploadSuccessful);
     } catch (e) {
       AppUtils.dismissLoading();

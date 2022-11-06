@@ -49,11 +49,9 @@ class TaskAPI {
       }),
     );
 
-    var jsonResponse = jsonDecode(response.data);
-
     if (response.statusCode != 200) {
       throw Exception(
-        jsonResponse["err"] ??
+        response.data["err"] ??
             "Failed to create task with error code ${response.statusCode}",
       );
     }
