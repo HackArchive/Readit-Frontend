@@ -41,22 +41,52 @@ class TaskCard extends StatelessWidget {
           ),
         ),
         subtitle: Text(task.completed),
-        trailing: IconButton(
-          onPressed: () {
-            onCompleteTapped(
-              int.parse(task.id),
-              !task.isCompleted,
-              task.isCanceled,
-              PropToUpdate.isComplete,
-              context,
-            );
-          },
-          icon: Icon(
-            task.isCompleted
-                ? Icons.assignment_turned_in
-                : Icons.assignment_turned_in_outlined,
-            color: Colors.orangeAccent,
-          ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              onPressed: () {
+                if (task.isCanceled) {
+                  AppUtils.showToast("Task Already Cancelled");
+                  return;
+                }
+
+                onCompleteTapped(
+                  int.parse(task.id),
+                  !task.isCompleted,
+                  task.isCanceled,
+                  PropToUpdate.isComplete,
+                  context,
+                );
+              },
+              icon: Icon(
+                task.isCompleted
+                    ? Icons.assignment_turned_in
+                    : Icons.assignment_turned_in_outlined,
+                color: Colors.orangeAccent,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                if (task.isCanceled) {
+                  AppUtils.showToast("Task Already Cancelled");
+                  return;
+                }
+
+                onCompleteTapped(
+                  int.parse(task.id),
+                  task.isCompleted,
+                  !task.isCanceled,
+                  PropToUpdate.isComplete,
+                  context,
+                );
+              },
+              icon: Icon(
+                task.isCanceled ? Icons.cancel_rounded : Icons.cancel_outlined,
+                color: Colors.redAccent,
+              ),
+            )
+          ],
         ),
       ),
     );
