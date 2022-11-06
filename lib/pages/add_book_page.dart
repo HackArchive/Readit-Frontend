@@ -122,7 +122,24 @@ class _AddBookPageState extends State<AddBookPage> {
     }
   }
 
-  final List<String> durationTypeList = ["minutes", "hours", "days", "months"];
+  final durationTypeList = [
+    {
+      "label": "Min",
+      "value": "minutes",
+    },
+    {
+      "label": "Hours",
+      "value": "hours",
+    },
+    {
+      "label": "Days",
+      "value": "days",
+    },
+    {
+      "label": "Months",
+      "value": "months",
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -155,19 +172,20 @@ class _AddBookPageState extends State<AddBookPage> {
                       hintText: "Enter Duration (in Minutes)",
                     ),
                   ),
-                  Expanded(
+                  Padding(
+                    padding: const EdgeInsets.only(right: 25),
                     child: DropdownButton<String>(
                       items: durationTypeList
                           .map(
                             (e) => DropdownMenuItem(
-                              value: e,
-                              child: Text(e),
+                              value: e["value"],
+                              child: Text(e["label"]!),
                             ),
                           )
                           .toList(),
                       onChanged: (value) {
                         setState(() {
-                          durationType = value ?? durationTypeList[0];
+                          durationType = value ?? durationTypeList[0]["value"]!;
                         });
                       },
                       value: durationType,
