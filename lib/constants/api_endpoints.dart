@@ -12,6 +12,7 @@ class APIEndpoints {
   // Auth
   static final String login = "$baseUrl/auth/login";
   static final String register = "$baseUrl/auth/register";
+  static final String profile = "$baseUrl/profile";
 
   // Tasks
   static final String createTask = "$baseUrl/add";

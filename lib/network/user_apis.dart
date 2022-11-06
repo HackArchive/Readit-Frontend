@@ -58,4 +58,28 @@ class UserAPI {
 
     return true;
   }
+
+  static Future<dynamic> getProfile(String token) async {
+    final url = Uri.parse(APIEndpoints.profile);
+
+    http.Response response = await http.get(
+      url,
+      headers: APIEndpoints.authHeaders(token),
+    );
+
+    var jsonResponse = jsonDecode(response.body);
+
+    if (response.statusCode != 200) {
+      throw Exception(
+        jsonResponse["err"] ??
+            "Failed to login with error code ${response.statusCode}",
+      );
+    }
+
+    return {
+      "books_canceled": jsonResponse["books_canceled"],
+      "books_pending": jsonResponse["books_pending"],
+      "books_completed": jsonResponse["books_completed"],
+    };
+  }
 }

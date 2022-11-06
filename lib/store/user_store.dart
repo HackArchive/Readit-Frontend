@@ -27,4 +27,11 @@ abstract class UserStoreBase with Store {
     currentUser = null;
     isLoggedIn = false;
   }
+
+  @action
+  setUserProfileData(int booksCompleted, int booksPending, int booksCanceled) {
+    currentUser?.booksPending = booksPending;
+    currentUser?.booksCompleted = booksCompleted;
+    currentUser?.booksCanceled = booksCanceled;
+  }
 }

@@ -4,6 +4,9 @@ class User {
   final String email;
   final String phone;
   final String token;
+  int booksPending;
+  int booksCanceled;
+  int booksCompleted;
 
   User({
     required this.id,
@@ -11,6 +14,9 @@ class User {
     required this.email,
     required this.phone,
     required this.token,
+    this.booksPending = 0,
+    this.booksCanceled = 0,
+    this.booksCompleted = 0,
   });
 
   factory User.getDummyUser() {
