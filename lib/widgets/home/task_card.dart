@@ -63,7 +63,7 @@ class TaskCard extends StatelessWidget {
                 task.isCompleted
                     ? Icons.assignment_turned_in
                     : Icons.assignment_turned_in_outlined,
-                color: Colors.orangeAccent,
+                color: Colors.lightGreen,
               ),
             ),
             IconButton(
