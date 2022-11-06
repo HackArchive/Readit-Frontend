@@ -63,11 +63,15 @@ class _RegisterPageState extends State<RegisterPage> {
 
       // If login successful, redirect
       AppUtils.dismissLoading();
-      Navigator.pushReplacementNamed(context, Routes.login);
+      Navigator.pop(context);
     } catch (e) {
       AppUtils.dismissLoading();
       AppUtils.showToast(e.toString());
     }
+  }
+
+  _loginTapped(BuildContext context) async {
+    Navigator.pop(context, Routes.login);
   }
 
   @override
@@ -142,6 +146,12 @@ class _RegisterPageState extends State<RegisterPage> {
             text: "Register",
             onTap: () => _registerPresses(context),
             key: const Key("Strings.loginButtonKey"),
+          ),
+          const SizedBox(height: 25),
+          LoginButton(
+            text: "Back",
+            onTap: () => _loginTapped(context),
+            key: const Key("Strings.registerButtonKey"),
           ),
         ],
       ),
