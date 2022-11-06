@@ -39,9 +39,9 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  logout(BuildContext context) {
+  userIconTapped(BuildContext context) {
     context.read<UserStore>().logout();
-    Navigator.pushReplacementNamed(context, Routes.login);
+    Navigator.pushReplacementNamed(context, Routes.profile);
   }
 
   addIconTapped(BuildContext context) {
@@ -150,8 +150,8 @@ class _HomePageState extends State<HomePage> {
       title: const Text("ReadIT"),
       actions: [
         IconButton(
-          icon: const Icon(Icons.logout),
-          onPressed: () => logout(context),
+          icon: const Icon(Icons.supervisor_account),
+          onPressed: () => userIconTapped(context),
         )
       ],
     );
