@@ -141,12 +141,17 @@ class _AddBookPageState extends State<AddBookPage> {
                 hintText: "Enter Book Name",
               ),
               const SizedBox(height: 20),
+              // Row(
+              // mainAxisSize: MainAxisSize.max,
+              // children: [
               LoginTextField(
                 controller: _taskDurationController,
                 isValid: isDurationValid,
                 errorText: "taskDurationError",
                 hintText: "Enter Duration (in Minutes)",
               ),
+              // ],
+              // ),
               const SizedBox(height: 20),
               LoginButton(
                 text: "SUBMIT",

@@ -38,8 +38,10 @@ class Task {
       id: task.id,
       title: task.title,
       durationToCompleteInMinutes: task.durationToCompleteInMinutes,
-      userId: task.userId,
+      isCompleted: task.isCompleted,
       isCanceled: task.isCanceled,
+      todos: task.todos,
+      userId: task.userId,
     );
   }
 

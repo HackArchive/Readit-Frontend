@@ -53,6 +53,54 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  onCompleteTapped(
+    int id,
+    bool isComplete,
+    bool isCanceled,
+    PropToUpdate propToUpdate,
+    BuildContext context,
+  ) async {
+    final List<Task> tasks = context.read<TaskStore>().userTasks;
+    final int taskIndex = tasks.indexWhere((_) => _.id == id.toString());
+    final String token = context.read<UserStore>().currentUser!.token;
+
+    Task taskToBeUpdated = Task.fromTask(tasks[taskIndex]);
+
+    try {
+      taskToBeUpdated.isCompleted = isComplete;
+      taskToBeUpdated.isCanceled = isCanceled;
+
+      tasks[taskIndex] = taskToBeUpdated;
+
+      context.read<TaskStore>().setTasks(tasks.toList());
+
+      bool success = await TaskAPI.updateTask(
+        id: id,
+        isCompleted: isComplete,
+        isCancelled: isCanceled,
+        token: token,
+      );
+
+      if (!success) {
+        throw Exception("Failed to mark complete");
+      }
+
+      AppUtils.dismissLoading();
+    } catch (e) {
+      if (propToUpdate == PropToUpdate.isComplete) {
+        taskToBeUpdated.isCompleted = !isComplete;
+      } else {
+        taskToBeUpdated.isCanceled = !isCanceled;
+      }
+
+      tasks[taskIndex] = taskToBeUpdated;
+      context.read<TaskStore>().setTasks(tasks.toList());
+
+      AppUtils.dismissLoading();
+      AppUtils.showToast(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +115,12 @@ class _HomePageState extends State<HomePage> {
                 children: context
                     .watch<TaskStore>()
                     .userTasks
-                    .map((task) => TaskCard(task: task))
+                    .map(
+                      (task) => TaskCard(
+                        task: task,
+                        onCompleteTapped: onCompleteTapped,
+                      ),
+                    )
                     .toList(),
               );
             },

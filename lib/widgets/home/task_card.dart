@@ -14,60 +14,18 @@ enum PropToUpdate {
 
 class TaskCard extends StatelessWidget {
   final Task task;
+  final Function onCompleteTapped;
 
   const TaskCard({
     Key? key,
     required this.task,
+    required this.onCompleteTapped,
   }) : super(key: key);
 
   onCardTapped(BuildContext context) {
     context.read<TaskStore>().setActiveTask(task);
 
     Navigator.pushNamed(context, Routes.book);
-  }
-
-  onCompleteTapped(
-    int id,
-    bool isComplete,
-    bool isCanceled,
-    PropToUpdate propToUpdate,
-    BuildContext context,
-  ) async {
-    final List<Task> tasks = context.read<TaskStore>().userTasks;
-    final Task taskToBeUpdated = tasks.firstWhere((_) => _.id == task.id);
-
-    try {
-      String token = context.read<UserStore>().currentUser!.token;
-
-      taskToBeUpdated.isCompleted = isComplete;
-      taskToBeUpdated.isCanceled = isCanceled;
-
-      // context.read<TaskStore>().setTasks(tasks);
-
-      bool success = await TaskAPI.updateTask(
-        id: id,
-        isCompleted: isComplete,
-        isCancelled: isCanceled,
-        token: token,
-      );
-
-      if (!success) {
-        throw Exception("Failed to mark complete");
-      }
-
-      AppUtils.dismissLoading();
-    } catch (e) {
-      // if (propToUpdate == PropToUpdate.isComplete) {
-      //   taskToBeUpdated.isCompleted = !isComplete;
-      // } else {
-      //   taskToBeUpdated.isCanceled = !isCanceled;
-      // }
-
-      // context.read<TaskStore>().setTasks(tasks);
-
-      AppUtils.dismissLoading();
-      AppUtils.showToast(e.toString());
-    }
   }
 
   @override
