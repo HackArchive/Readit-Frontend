@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 0),
           child: Observer(
             builder: (BuildContext context) {
               return Column(

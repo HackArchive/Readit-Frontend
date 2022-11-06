@@ -84,49 +84,62 @@ class BookPage extends StatelessWidget {
   }
 
   Widget todoCard(BuildContext context, ToDo todo) {
-    return ListTile(
-      title: Text(todo.title),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Checkbox(
-            value: todo.isCompleted,
-            onChanged: (checked) {
-              onCompleteTapped(
-                todo.id,
-                checked ?? false,
-                todo.isInProgress,
-                PropToUpdate.isComplete,
-                context,
-              );
-            },
-          ),
-          GestureDetector(
-            onTap: () {
-              onCompleteTapped(
-                todo.id,
-                todo.isCompleted,
-                !todo.isInProgress,
-                PropToUpdate.isInProgress,
-                context,
-              );
-            },
-            child: Container(
-              height: 18,
-              width: 18,
-              decoration: BoxDecoration(
-                color: todo.isInProgress
-                    ? Colors.orangeAccent
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: todo.isInProgress ? Colors.orangeAccent : Colors.grey,
-                  width: 2,
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: ListTile(
+        title: Text(
+          todo.title,
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Checkbox(
+              value: todo.isCompleted,
+              onChanged: (checked) {
+                onCompleteTapped(
+                  todo.id,
+                  checked ?? false,
+                  todo.isInProgress,
+                  PropToUpdate.isComplete,
+                  context,
+                );
+              },
+              fillColor: MaterialStateProperty.all(Colors.blue),
+            ),
+            GestureDetector(
+              onTap: () {
+                onCompleteTapped(
+                  todo.id,
+                  todo.isCompleted,
+                  !todo.isInProgress,
+                  PropToUpdate.isInProgress,
+                  context,
+                );
+              },
+              child: Container(
+                height: 18,
+                width: 18,
+                decoration: BoxDecoration(
+                  color: todo.isInProgress
+                      ? Colors.orangeAccent
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color:
+                        todo.isInProgress ? Colors.orangeAccent : Colors.grey,
+                    width: 2,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -138,7 +151,7 @@ class BookPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Book Page'),
+        title: const Text('Book'),
       ),
       body: task == null
           ? const Text('Loading...')
@@ -149,24 +162,27 @@ class BookPage extends StatelessWidget {
                 return false;
               },
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text(
-                      task.title,
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                    const SizedBox(height: 30),
-                    Observer(
-                      builder: (context) => Column(
-                        children: context
-                            .watch<TaskStore>()
-                            .activeTask!
-                            .todos
-                            .map((todo) => todoCard(context, todo))
-                            .toList(),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(vertical: 24),
+                  child: Column(
+                    children: [
+                      Text(
+                        task.title,
+                        style: const TextStyle(fontSize: 24),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 30),
+                      Observer(
+                        builder: (context) => Column(
+                          children: context
+                              .watch<TaskStore>()
+                              .activeTask!
+                              .todos
+                              .map((todo) => todoCard(context, todo))
+                              .toList(),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
