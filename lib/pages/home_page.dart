@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   userIconTapped(BuildContext context) {
-    Navigator.pushReplacementNamed(context, Routes.profile);
+    Navigator.pushNamed(context, Routes.profile);
   }
 
   addIconTapped(BuildContext context) {
