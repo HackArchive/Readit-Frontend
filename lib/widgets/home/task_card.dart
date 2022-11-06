@@ -1,11 +1,6 @@
-import 'package:clock_hacks_book_reading/constants/routes.dart';
 import 'package:clock_hacks_book_reading/models/task_model.dart';
-import 'package:clock_hacks_book_reading/network/tasks_apis.dart';
-import 'package:clock_hacks_book_reading/store/task_store.dart';
-import 'package:clock_hacks_book_reading/store/user_store.dart';
 import 'package:clock_hacks_book_reading/utils/app_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 enum PropToUpdate {
   isComplete,

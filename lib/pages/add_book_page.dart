@@ -25,6 +25,7 @@ class _AddBookPageState extends State<AddBookPage> {
 
   final _taskNameController = TextEditingController(text: "Test");
   final _taskDurationController = TextEditingController(text: "60");
+  String durationType = "minutes";
 
   bool isNameValid = true;
   bool isDurationValid = true;
@@ -105,7 +106,7 @@ class _AddBookPageState extends State<AddBookPage> {
         token,
         _taskNameController.text,
         int.parse(_taskDurationController.text),
-        "minutes",
+        durationType,
         files,
       );
 
@@ -120,6 +121,8 @@ class _AddBookPageState extends State<AddBookPage> {
       AppUtils.showToast(e.toString());
     }
   }
+
+  final List<String> durationTypeList = ["minutes", "hours", "days", "months"];
 
   @override
   Widget build(BuildContext context) {
@@ -141,17 +144,37 @@ class _AddBookPageState extends State<AddBookPage> {
                 hintText: "Enter Book Name",
               ),
               const SizedBox(height: 20),
-              // Row(
-              // mainAxisSize: MainAxisSize.max,
-              // children: [
-              LoginTextField(
-                controller: _taskDurationController,
-                isValid: isDurationValid,
-                errorText: "taskDurationError",
-                hintText: "Enter Duration (in Minutes)",
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: LoginTextField(
+                      controller: _taskDurationController,
+                      isValid: isDurationValid,
+                      errorText: "taskDurationError",
+                      hintText: "Enter Duration (in Minutes)",
+                    ),
+                  ),
+                  Expanded(
+                    child: DropdownButton<String>(
+                      items: durationTypeList
+                          .map(
+                            (e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(e),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          durationType = value ?? durationTypeList[0];
+                        });
+                      },
+                      value: durationType,
+                    ),
+                  ),
+                ],
               ),
-              // ],
-              // ),
               const SizedBox(height: 20),
               LoginButton(
                 text: "SUBMIT",
